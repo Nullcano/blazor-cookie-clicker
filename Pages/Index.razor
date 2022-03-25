@@ -1,0 +1,41 @@
+﻿@page "/"
+
+<PageTitle>Cookie Clicker</PageTitle>
+
+<h1>@cookies cookies</h1>
+
+<button @onclick="CookieClick">
+  <img src="cookie.png" alt="Cookie" />
+</button>
+
+@code {
+  public bool isRunning = true;
+
+  private int cookies = 0;
+
+  private void CookieClick()
+  {
+    cookies++;
+  }
+
+  public async void GameLoop() 
+  {
+    while (isRunning) {
+      await Task.Delay(1000);
+      CookieClick();
+      this.StateHasChanged();
+    }
+  }
+
+  protected override void OnInitialized()
+  {
+    GameLoop();
+  }
+
+  public class Upgrade
+  {
+    public string Name { get; set; }
+    public int Cost { get; set; }
+    public int Multiplier { get; set; }
+  }
+}
